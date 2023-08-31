@@ -1,0 +1,18 @@
+#DOCKER COMPOSE CONFIGURATION FILE
+version: "3.9" #version of the docker-compose syntax that we gonna using
+
+services:
+  app:
+    build:
+      context: . #means build the docker file inside our current directory
+      args:
+        - DEV=true
+    ports: # port mapping
+      - "8000:8000" #this maps port 8000 on our local machine to port 8000 in our DOCKER CONTAINER 
+    volumes: # Volumes are way of mapping directories from our system into our docker container
+      - ./app:/app # we dont need to rebuild our container every time we make changes in local, instead we sync the code in local to the code in container
+    command: >
+      sh -c "python manage.py runserver 0.0.0.0:8000"
+
+
+# docker-compose build ===> build our docker image

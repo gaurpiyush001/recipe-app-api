@@ -1,0 +1,8 @@
+<!-- place this file inside your app directory otherwise linting tool will not be able to pick it up -->
+<!-- here we will exclude linting to files generated automatically by django  -->
+[flake8]
+exclude = 
+    migrations,
+    __pycache__,
+    manage.py,
+    settings.py
