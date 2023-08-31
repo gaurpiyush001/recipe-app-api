@@ -6,7 +6,7 @@ on: [push] # trigger, So we say this particular Action to run on PUSH event
 
 jobs:
   test-lint: #ID of the job
-    nme: Test and Lint
+    name: Test and Lint
     runs-on: ubuntu-20.04 #RUNNER(Operating system that will be running our workflow on an event)
     steps:
       - name: Login to Docker Hub
