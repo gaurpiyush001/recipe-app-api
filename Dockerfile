@@ -17,13 +17,18 @@ EXPOSE 8000
 
 ARG DEV=false
 #Below runs a command on the Alpine Image that we are using
+#apk add --update --no-cache postgresql-client && \ ---> this is the client package that we going to need to install inside our ALPINE image in order for dhjango db adaptor to connect to postgres
 RUN python -m venv /py && \
     /py/bin/pip install --upgrade pip && \
+    apk add --update --no-cache postgresql-client && \       
+    apk add --update --no-cache --virtual .tmp-build-deps \
+        build-base postgresql-dev musl-dev && \
     /py/bin/pip install -r /tmp/requirements.txt && \
     if [ $DEV = "true" ]; \
         then /py/bin/pip install -r /tmp/requirements.dev.txt ; \
     fi && \
     rm -rf /tmp && \
+    apk del .tmp-build-deps && \
     adduser \
         --disabled-password \
         --no-create-home \

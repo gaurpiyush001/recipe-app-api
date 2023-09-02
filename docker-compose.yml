@@ -13,6 +13,26 @@ services:
       - ./app:/app # we dont need to rebuild our container every time we make changes in local, instead we sync the code in local to the code in container
     command: >
       sh -c "python manage.py runserver 0.0.0.0:8000"
+    environment:
+      - DB_HOST=db
+      - DB_NAME=devdb
+      - DB_USER=devuser
+      - db_PASS=changeme
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13-alpine
+    volumes:
+      - dev-db-data:/var/lib/postgresql/data
+    environment: #here below we are setting intial Database configuration for our DB Service, creating DEV credentials for local development database
+      - POSTGRES_DB=devdb #create database with given name
+      - POSTGRES_USER=devuser #create user
+      - POSTGRES_PASSWORD=changeme #password set
+
+
+volumes:
+  dev-db-data: # name of our volume
 
 
 # docker-compose build ===> build our docker image
